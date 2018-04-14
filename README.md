@@ -8,6 +8,6 @@ Para executar esta aplicação você deve instalar os seguintes pacotes.
 
 Respectivamente:
 
-`npm install express` 
+`npm install express --save` 
 
-`npm install socket.io`
+`npm install socket.io --save`
