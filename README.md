@@ -1,6 +1,7 @@
 # peerclick
 Para executar esta aplicação você deve instalar os seguintes`` pacotes.
-*. *express*``
+
+*. *express*` ``
 *. *socket.io*``
 
 # Instalando os pacotes
