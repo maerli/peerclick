@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+
+<head>
+<title>Mostrar</title>
+<script src="/socket.io/socket.io.js"></script>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<style>
+</style>
+<script>
+	function $(id){
+		return document.querySelector(id);
+	}
+	addEventListener('load',function(){
+		socket = io.connect('http://localhost:3000');
+		socket.emit('change_number',5);
+		socket.on('change',function(data){
+		var total = 0;
+		for(let i in data){
+			if(i != 'item' && i != 'finish'){
+				total += data[i];
+			}
+		}
+		for(let i in data){
+			$('.'+i).innerHTML = (100*data[i]/total).toPrecision(3);
+		}
+		$('.total').innerHTML = total;
+		$('.item').innerHTML = data.item;
+		console.log(data );
+		});
+		$('#change').addEventListener('click',function(){
+			socket.emit('change');
+		});
+		$('#same').addEventListener('click',function(){
+			socket.emit('same');
+		});
+		
+		$('#number').addEventListener('change',function(event){
+			socket.emit('change_number',this.value);
+		});
+		
+	});
+</script>
+<style>
+	.total{
+		color:red;
+	}
+	*{
+		font-size:19px;
+	}
+	.opt{
+		padding:9x;
+		color:blue;
+		border:1px solid black;
+		-webkit-border-radius:6px;
+		display:inline-block;
+		width:20px;
+		text-align:center;
+		margin:4px;
+	}
+	.item{
+		color:blue;
+	}
+	body{
+		margin-left:10%;
+		margin-top:50px;
+	}
+	button{
+		border:0;
+		color:white;
+		background-color:black;
+		-webkit-border-radius:10px;
+		padding:6px;
+		cursor:pointer;
+	}
+</style>
+</head>
+
+<body>
+<b>Item <span class='item'></span><br></b>
+<br>
+<span class='opt'>a</span>  <span class='a'></span>%<br>
+<span class='opt'>b</span> <span class='b'></span>%<br>
+<span class='opt'>c</span> <span class='c'></span>%<br>
+<span class='opt'>d</span>  <span class='d'></span>%<br>
+<span class='opt'>e</span>  <span class='e'></span>%<br>
+<br>
+Total respondentes (<span class='total'></span>)<br>
+<br>
+opções <select id="number">
+<option value="5" selected>5
+<option value="4">4
+<option value="3">3
+<option value="2">2
+<option value="1">1
+</select>
+<br><br>
+<button id='change'>Mudar item</button> <button id='same'>Mesmo item</button>
+
+</body>
+</html>
