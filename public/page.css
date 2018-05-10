@@ -18,3 +18,11 @@
 		border:0;
 		margin:9px auto 9px auto;
 	}
+	.solve{
+		font-weight: bold;
+		font-size: 19px;
+	}
+	#item{
+		font-size: 19px;
+		text-align: justify;
+	}

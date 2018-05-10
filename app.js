@@ -69,9 +69,9 @@ var io = socket(server);
 
 io.sockets.on('connection',function(sockets){
 	console.log('nova conexao' + sockets.id);
-	
+
 	sockets.emit('change',itens[itens.length - 1]);
-	
+
 	sockets.on('answer',function(data){
 		if(users.indexOf(parseInt(data.user)) == -1){
 			users.push(parseInt(data.user));
@@ -79,9 +79,9 @@ io.sockets.on('connection',function(sockets){
 			sockets.broadcast.emit('change',itens[itens.length - 1]);
 		}
 		console.log(users);
-		
+
 	});
-	
+
 	sockets.on('init',function(data){
 		if(data == null){
 			sockets.emit('user',user);
@@ -91,7 +91,7 @@ io.sockets.on('connection',function(sockets){
 		}
 		sockets.emit('change_number',optquantity);
 	});
-	
+
 	sockets.on('same',function(data){
 		users = [];
 		itens.push(getitens());
@@ -99,11 +99,11 @@ io.sockets.on('connection',function(sockets){
 		save();
 		sockets.emit('change',itens[itens.length - 1]);
 	});
-	
+
 	sockets.on('check',function(data){
-		sockets.emit('check',users.indexOf(parseInt(data)) == -1);
+		sockets.emit('check',{'isclicked':users.indexOf(parseInt(data)) == -1,'item':item});
 	});
-	
+
 	sockets.on('change',function(data){
 		item += 1;
 		users = [];
@@ -111,18 +111,17 @@ io.sockets.on('connection',function(sockets){
 		reload(io.sockets);
 		save();
 		io.sockets.emit('change',itens[itens.length - 1]);
-		
+
 	});
 	sockets.on('change_number',function(data){
 		optquantity = data;
 		sockets.broadcast.emit('change_number',optquantity);
-	})
+	});
 	sockets.on('disconnect',function(data){
 		console.log(sockets.id + ' foi disconecatado!');
 	});
-	
 
-	
+
 });
 
 app.get('/show',function(req,res){

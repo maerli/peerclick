@@ -3,16 +3,16 @@ let MSG = {
 			'paraResponder':'Item ainda não respondido',
 			'jaRespondido':'Este item já foi Respondido, espere o próximo item...',
 			'responderNovamente':'Responder este item novamente'
-		}	
+		}
 	}
 	function $(id){
 			return document.querySelector(id);
 		}
-		
+
 	function solve(text){
 		$('.solve').innerHTML = MSG.item[text];
 	}
-		
+
 
 	function setUser(item){
 		var store = sessionStorage.setItem('answer',item);
@@ -22,10 +22,10 @@ let MSG = {
 	}
 
 	addEventListener('load',function(){
-		
+
 		var vowel = '';
-		
-		
+
+
 		function send(vowel){
 			socket.emit('answer',{'user':getUser(),'vowel':vowel});
 			it = true;
@@ -45,30 +45,29 @@ let MSG = {
 				clicked = this;
 			});
 		}
-		
+
 		var button = document.querySelector('button');
 		button.addEventListener('click',function(){
 			send(vowel);
 			solve('jaRespondido');
 		});
-		
+
 		//quando usuario se conecta pela primeira vez
 		if(getUser() == null){
 		}
-		
+
 		socket = io.connect(location.host);
 		socket.emit('init',getUser());
 		socket.on('reload',function(item){
 			reload(clicked,item);
 			it = false;
 		});
-		
+
 		socket.on('user',function(user){
 			if(getUser() == null){
 				setUser(user);
 			}
 			socket.emit('check',getUser());
-			console.log('check');
 		})
 		socket.on('change_number',function(data){
 			var spn = document.querySelectorAll('.box');
@@ -81,20 +80,32 @@ let MSG = {
 			}
 		});
 		socket.on('check',function(data){
-			if(data){
-				reload(clicked);
+			if(data.isclicked){
+				reload(clicked,data.item);
 			}else{
 				solve('jaRespondido');
 			}
-			it = !data;
+			it = !data.isclicked;
 		});
-		
-		function reload(clicked){
+
+		function ponte(data){
+			let letters = ['a','b','c','d','e'];
+			return data.map(function(x,y){
+				if(y == 0){
+					return x;
+				}else{
+					return letters[y - 1] + ')' +  x;
+			}}).join('<br><br>');
+		}
+		function reload(clicked,item){
 			if(clicked){
 				clicked.style.backgroundColor = 'blue';
+			}
+			if(itens[item]){
+						$('#item').innerHTML = ponte(itens[item]);
 			}
 			button.disabled = true;
 			solve('paraResponder');
 		}
-		
+
 	});
