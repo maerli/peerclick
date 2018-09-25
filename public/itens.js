@@ -1,4 +1,15 @@
+/* ITEM : ["descrição do item",
+        "opção A",
+         "opção B",
+         "opção C",
+         "opção D",
+         "opção E"
+]
+*/
+
 itens = {
+  
+  
   "1":[
     " A figura abaixo, retirado/adaptado de BRAGA, representa um transformador ideal, em que a tensão de entrada é de 12V e a de saída é de 120V, e as correntes de entrada e saída são de 10A e 1ª, respectivamente.<br><img src='conversao.png' width='400' height='200'>",
     "Há conservação de energia, apesar das mudanças de tensão e corrente.",
