@@ -147,7 +147,20 @@ files.forEach(function (file) {
 });
 
 app.get('/material_de_aula',function(req, res){
-	res.send(fileList.join('<br>'));
+	
+var html = `
+	<!doctype html>
+	<html>
+	<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<title>Material de aula</title>
+	</head>
+	</body>
+	${fileList.join('<br>')}
+	</html>
+	`;
+	
+	res.send(html);
 });
 
 
