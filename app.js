@@ -1,7 +1,7 @@
+
 var express = require('express');
 var fs = require('fs');
 var ip = require('./ip');
-var app = express();
 var socket = require('socket.io');
 var path = require('path');
 
@@ -38,10 +38,9 @@ var users = [];
 function save(){
 	//salva em 'dados.txt' no formato JSON, para futuras analises dos dados
 	fs.writeFile('dados.txt',JSON.stringify(itens),'utf8',function(data){
-			console.log('dados gravados com sucesso');
-		});
+		console.log('dados gravados com sucesso');
+	});
 }
-
 function getitens(){
 	return {
 		'a':0,
@@ -52,8 +51,9 @@ function getitens(){
 		'item':item
 	};
 }
-
 var itens = [getitens()];
+
+var app = express();
 
 app.get('/aluno',function(req,res){
 	res.sendFile( __dirname + "/public/" + "index.html" );
@@ -140,7 +140,7 @@ var files = fs.readdirSync(directoryPath);
 var fileList = [];
 //listando todos os arquivos usando forEach
 files.forEach(function (file) {
-	fileList.push(file); 
+	fileList.push('<a href=\''+file+'\'>' + file + '</a>'); 
 });
 
 app.get('/material_de_aula',function(req, res){
