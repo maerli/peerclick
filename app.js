@@ -140,12 +140,16 @@ var files = fs.readdirSync(directoryPath);
 var fileList = [];
 //listando todos os arquivos usando forEach
 files.forEach(function (file) {
+	app.get('/'+file,function(req,res){
+		res.download(__dirname + '/material/'+file);
+	});
 	fileList.push('<a download href=\''+file+'\'>' + file + '</a>');
 });
 
 app.get('/material_de_aula',function(req, res){
 	res.send(fileList.join('<br>'));
 });
+
 
 function reload(b){
 	b.emit('reload',itens.length);
