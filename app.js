@@ -132,6 +132,10 @@ app.get('/change',function(req,res){
 	res.send('ok');
 });
 
+app.get('/material_de_aula',function(req, res){
+	res.send();
+});
+
 function reload(b){
 	b.emit('reload',itens.length);
 }
