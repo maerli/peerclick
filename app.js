@@ -3,6 +3,7 @@ var fs = require('fs');
 var ip = require('./ip');
 var app = express();
 var socket = require('socket.io');
+var path = require('path');
 
 //variaveis de configuração
 
@@ -132,8 +133,18 @@ app.get('/change',function(req,res){
 	res.send('ok');
 });
 
+//concatenando diretorio atual com a pasta dos arquivos
+var directoryPath = path.join(__dirname, 'material');
+//lendo o diretorio
+var files = fs.readdirSync(directoryPath);
+var fileList = [];
+//listando todos os arquivos usando forEach
+files.forEach(function (file) {
+	fileList.push(file); 
+});
+
 app.get('/material_de_aula',function(req, res){
-	res.send();
+	res.send(fileList.join('<br>'));
 });
 
 function reload(b){
