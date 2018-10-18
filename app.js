@@ -140,7 +140,7 @@ var files = fs.readdirSync(directoryPath);
 var fileList = [];
 //listando todos os arquivos usando forEach
 files.forEach(function (file) {
-	app.get('/'+file,function(req,res){
+	app.get('/'+encodeURI(file),function(req,res){
 		res.download(__dirname + '/material/'+file);
 	});
 	fileList.push('<a download href=\''+file+'\'>' + file + '</a>');
