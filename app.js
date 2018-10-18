@@ -140,7 +140,8 @@ var files = fs.readdirSync(directoryPath);
 var fileList = [];
 //listando todos os arquivos usando forEach
 files.forEach(function (file) {
-	fileList.push('<a href=\''+file+'\'>' + file + '</a>'); 
+	console.log(file.type);
+	fileList.push('<a href=\''+file+'\'>' + file + '</a>');
 });
 
 app.get('/material_de_aula',function(req, res){
